@@ -13,8 +13,7 @@ Default options are displayed in square brackets []
 * ...
 
 ## Example
-add what follows at the end of your url terminating with `index.html`
-```
-?lang=fr&tid=9443,2&zoom=true&markers=true
-```
+You can try it here :  
+[http://lifemap.univ-lyon1.fr/lifemap-query/?tid=9443,2&lang=fr&zoom=true&markers=true](http://lifemap.univ-lyon1.fr/lifemap-query/?tid=9443,2&lang=fr&zoom=true&markers=true
+)
 
