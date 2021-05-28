@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+ 		<meta http-equiv="X-UA-Compatible" content="IE=edge">	
+ 		<meta http-equiv="Content-Security-Policy">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>Lifemap-query</title>
+		<!-- leaflet -->
+		<link rel="stylesheet" href="js/leaflet/leaflet.css" />
+		<!-- lifemap functions --> 
+ 		<script type="text/javascript" src="js/lifemap/action.js"></script>
+ 		<!-- lifemap style -->
+ 		<link rel="stylesheet" href="css/lifemap.css">
+	</head>
+	<body onload="onLoad()" style="background:black;">
+		<!--MAP-->
+		<div id="map" style="height:100%; z-index:0;">
+		</div>
+		<!--LOGO-->
+		<div class="bottomleft">
+			<img src="img/LMtext1.png" height="20px">
+		</div>
+
+		<!-- SCRIPTS -->
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="js/jquery/jquery.min.js"></script>
+		<!-- Include leaflet -->
+		<script src="js/leaflet/leaflet.js"></script>
+		<!-- Lifemzap scripts -->
+		<script src="js/lifemap/mapcontrol.js"></script>
+		<!-- Lifemzap scripts -->
+		<script src="js/lifemap/treefunctions.js"></script>
+
+	</body>
+</html>
