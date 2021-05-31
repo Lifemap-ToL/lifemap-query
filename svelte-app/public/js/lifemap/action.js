@@ -25,9 +25,10 @@ function onLoad() {
 	const zoom = urlParams.get('zoom') == "false" ? false : true;
 	//get markers options. If true, (the default, markers are displayed
 	const marks = urlParams.get('markers') == "false" ? false : true;
+	//get tree option. If true (the default) the sub-tree with all taxa is display
+	const tree = urlParams.get('tree') == "false" ? false : true;
 
-
-	if (tids) DisplayTaxids(taxids, zoom, marks);
+	if (tids) DisplayTaxids(taxids, zoom, marks, tree);
 
 
 }
