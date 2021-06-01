@@ -8,7 +8,12 @@
 	and add markers (if marks=true), draw the tree (if tree=true), zoom to the taxids (if zoom=true), etc. 
 */
 
-var DisplayTaxids = function(taxids, zoom, marks=false, tree=false) {
+function onlyUnique(value, index, self) { 
+	// Remove duplicate
+	return self.indexOf(value) === index;
+}
+
+var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false) {
 	taxids = taxids.filter( onlyUnique );
 	taxid = "(" + taxids.map(el => el.trim()).join(" ") + ")";
 
@@ -28,7 +33,6 @@ var DisplayTaxids = function(taxids, zoom, marks=false, tree=false) {
 			//take options into account
 			if (zoom) {
 				if (ok.length==1) {
-					console.log(ok)
 					map.setView(ok[0].coordinates, ok[0].zoom)
 				}
 				else {
@@ -39,16 +43,14 @@ var DisplayTaxids = function(taxids, zoom, marks=false, tree=false) {
 				map.addLayer(markers)
 			}
 			if (tree) {
-				//TODO
-
-				allRoutes(taxid).then(function(resu) {
+				allRoutes(taxid).then(function(resu, lang) {
 						var RESUFINAL = [];
 						var RESUROUTES = [];
 						for (i=0;i<resu.length; i++) {
 							RESUFINAL[i] = resu[i].taxid[0]
 							RESUROUTES[i] = resu[i].taxid.concat(resu[i].ascend)
 						}
-						getmultiRoute(RESUROUTES);
+						getmultiRoute(RESUROUTES, lang);
 				})
 			}
 		},
@@ -56,16 +58,6 @@ var DisplayTaxids = function(taxids, zoom, marks=false, tree=false) {
 		jsonp : 'json.wrf'
 	});	    
 };
-
-
-/*
-Functions used by DisplayTaxids
-*/
-function onlyUnique(value, index, self) { 
-	// Remove duplicate
-	return self.indexOf(value) === index;
-}
-
 
 function allRoutes(multiTaxid) {
 	return new Promise(function (resolve, reject) {
@@ -82,7 +74,7 @@ function allRoutes(multiTaxid) {
 }
 
 
-function getmultiRoute(multiA) {
+function getmultiRoute(multiA, lang) {
 	var alreadymet=[];
 	var NEW=[];
 	for (i=0;i<multiA.length;i++) {
@@ -98,7 +90,8 @@ function getmultiRoute(multiA) {
 		}
 	}
 	//this lists all required taxid, each once only. From those we will get lat/lon coordinates
-	var URL_PREFIX_FINAL = "http://lifemap-ncbi.univ-lyon1.fr:8983/solr/taxo/select?q=taxid:(";
+	var URL_PREFIX_FINAL = lang=="fr" ? "http://lifemap-fr.univ-lyon1.fr/solr/taxo/select?q=taxid:(" : "http://lifemap.univ-lyon1.fr/solr/taxo/select?q=taxid:(";
+
 	var URL_SUFFIX = ")&wt=json&rows=10000";
 	var URL = URL_PREFIX_FINAL + alreadymet.join(' ') + URL_SUFFIX;
 	$.ajax({
@@ -107,7 +100,6 @@ function getmultiRoute(multiA) {
 			//create a dictionary
 			var DictoLL = {};
 			var DictoNAMES = {};
-			// map.removeLayer(multipolyline);
 			var docs = JSON.stringify(data.response.docs);
 			var jsonData = JSON.parse(docs);
 			for (i=0;i<jsonData.length;i++) {
@@ -128,4 +120,4 @@ function getmultiRoute(multiA) {
 		dataType : 'jsonp',
 		jsonp : 'json.wrf'
 	});
-}  
+} 

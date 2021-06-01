@@ -14,6 +14,7 @@ function onLoad() {
 	//language -> define address of basemap. english by default
 	const lang = urlParams.get('lang')
 	ServerAddress = lang=="fr" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
+
 	setmaplayer('http://'+ServerAddress+'/retina_tiles/{z}/{x}/{y}.png');
 
 	//get taxid(s) (if any) 
@@ -25,10 +26,14 @@ function onLoad() {
 	const zoom = urlParams.get('zoom') == "false" ? false : true;
 	//get markers options. If true, (the default, markers are displayed
 	const marks = urlParams.get('markers') == "false" ? false : true;
-	//get tree option. If true (the default) the sub-tree with all taxa is display
+	//get tree option. If true (the default) the sub-tree with all taxa is displayed
 	const tree = urlParams.get('tree') == "false" ? false : true;
+	//get searchbar option. If true (the default), the searchbar is displayed
+	const searchbar = urlParams.get('searchbar') == "false" ? false : true;
+	//get font size for the jquery autocomplete widget 
+	let uifontsize = urlParams.get('uifontsize');
+	try { uifontsize = parseInt(uifontsize, 10);} catch (e) {uifontsize = null}
 
 	if (tids) DisplayTaxids(taxids, zoom, marks, tree);
-
-
+	if (searchbar) mainFunction(lang, searchbar, uifontsize);
 }
