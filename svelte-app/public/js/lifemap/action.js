@@ -30,10 +30,17 @@ function onLoad() {
 	const tree = urlParams.get('tree') == "false" ? false : true;
 	//get searchbar option. If true (the default), the searchbar is displayed
 	const searchbar = urlParams.get('searchbar') == "false" ? false : true;
-	//get font size for the jquery autocomplete widget 
+	//get font size for the jquery autocomplete widget, default is 11px
 	let uifontsize = urlParams.get('uifontsize');
 	try { uifontsize = parseInt(uifontsize, 10);} catch (e) {uifontsize = null}
+	// get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
+	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
 
-	if (tids) DisplayTaxids(taxids, zoom, marks, tree);
-	if (searchbar) mainFunction(lang, searchbar, uifontsize);
+	if (tids) DisplayTaxids(taxids, zoom, marks, tree, clickableMarkers);
+	if (searchbar) { 
+		DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
+	} else {
+		searchDiv = document.getElementById("searchbar");
+		searchDiv.parentNode.removeChild(searchDiv);
+	}
 }

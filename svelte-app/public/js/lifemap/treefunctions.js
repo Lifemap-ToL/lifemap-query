@@ -4,8 +4,11 @@
 
 
 /*
-	this DisplayTaxids() function is the main one. It will display the taxids required,
-	and add markers (if marks=true), draw the tree (if tree=true), zoom to the taxids (if zoom=true), etc. 
+	this DisplayTaxids() function is the main one. It will display the taxids required.
+	zoom=true => zoom to the taxids;
+	marks=true => add markers;
+	tree=true => draw the tree;
+	clickableMarkers=[true]false => if true, markers become clickable and they open a modal box with information.
 */
 
 function onlyUnique(value, index, self) { 
@@ -13,7 +16,7 @@ function onlyUnique(value, index, self) {
 	return self.indexOf(value) === index;
 }
 
-var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false) {
+var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false, clickableMarkers) {
 	taxids = taxids.filter( onlyUnique );
 	taxid = "(" + taxids.map(el => el.trim()).join(" ") + ")";
 
@@ -24,10 +27,16 @@ var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false) {
 		success : function(data) {
 			var docs = JSON.stringify(data.response.docs);
 			var ok = JSON.parse(docs);
-
 			$.each(ok, function( index, value ) {
 				var latlong = new L.LatLng(ok[index].lat[0], ok[index].lon[0]);
 				var marker = L.marker(latlong,{icon: pin1, opacity:1});
+				let taxidok = ok[index].taxid[0];
+				let spname = ok[index].sci_name[0];
+				let comname = "";
+				try {comname = ok[index].common_name[0]} catch (e) {};
+				let rank = ok[index].rank[0];
+
+				markerList.push([marker, taxidok, spname, comname, rank]);
 				markers.addLayer(marker);
 			});
 			//take options into account
@@ -53,12 +62,18 @@ var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false) {
 						getmultiRoute(RESUROUTES, lang);
 				})
 			}
+			if (clickableMarkers) {
+				markerList.forEach(function(marker) {
+					marker[0].on("click", function() {
+						markofun(marker[1], marker[2], marker[3], marker[4]);
+					})
+		  		});
+			}
 		},
 		dataType : 'jsonp',
 		jsonp : 'json.wrf'
 	});	    
 };
-
 function allRoutes(multiTaxid) {
 	return new Promise(function (resolve, reject) {
 		var url = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+multiTaxid+")&wt=json&rows=1000";

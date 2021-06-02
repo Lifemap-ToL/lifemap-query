@@ -11,6 +11,7 @@ function setmaplayer(tolUrl) {
 	map.setView([-5,0], 4);
 }
 var markers = new L.FeatureGroup();
+let markerList = [];
 //VISUAL ELEMENTS (LOGOS, IMAGES, etc...)
 var pin1 = L.icon({
 	iconUrl: 'img/pin1.png',
