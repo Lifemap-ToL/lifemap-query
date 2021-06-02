@@ -79,20 +79,20 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 								commonname=commonname.replace(/<b>/g,"");
 								commonname=commonname.replace(/<\/b>/g,"");
 								var renderval = spname + commonname;
-
-								if ((issp==="species")||(issp==="subspecies")) {
-									labOK = "<div style='padding: 20px;'><span class=\"scinameItalic\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\" >" + str[2] + "</span></div>";			
-								}
-								else {
-									labOK = "<div style='padding: 20px;'><span class=\"sciname\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\">" + str[2] + "</span></div>";
-								};
+								labOK = str[0].replaceAll("<b>", "").replaceAll("</b>", "") //+ str[1] + str[2]
+								// if ((issp==="species")||(issp==="subspecies")) {
+								// 	labOK = "<div style='padding: 20px;'><span class=\"scinameItalic\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\" >" + str[2] + "</span></div>";			
+								// }
+								// else {
+								// 	labOK = "<div style='padding: 20px;'><span class=\"sciname\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\">" + str[2] + "</span></div>";
+								// };
 								return {
-									label : labOK,
-									value : renderval,
+									label: labOK,
+									value: renderval,
 									taxidfinal: taxid,
 									spname: spname,
 									commonname: commonname,
-									rank:issp	
+									rank: issp	
 								}
 							}));
 						},
@@ -104,6 +104,8 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 				minLength : '1',
 				autoFocus: true,
 				html: true,
+				scroll: true,
+				highlightClass: "bold-text",
 				focus: function() {
 						// prevent value inserted on focus
 						return false;
@@ -129,10 +131,6 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 									markofun(jsonData[0].taxid[0], jsonData[0].sci_name[0], comname, jsonData[0].rank[0]);
 								})
 							}
-							// TODO
-							// SPfocus.on("click", function() {
-							// 	markofun(taxidok, spnameok,commonnameok,rankok);
-							// })
 							SPfocus.addTo(map);
 						},
 						dataType : 'jsonp',
@@ -141,8 +139,6 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 				}
 			})
 		});
-	}
-	if (clickableMarkers) {
 	}
 }
 
@@ -213,7 +209,6 @@ let markofun = function(taxid, spname, comname, rank) {
 		getWikiDesc(spname).then(function(resu){
 			if (resu!=null) {
 				if (resu.thumbnail!==undefined) {
-					console.log("here");
 					//we add the image to the modal
 					// <div><a href="https://en.wikipedia.org/wiki/' + spname + '" target="_blank"></a>
 					pict = '<div id="modalbody-pict"><img id="wiki-image" src ='+resu.thumbnail.source+' width="100%"></div>'

@@ -49,6 +49,10 @@ img.center {
 	font-size: 11px;
 }
 
+.bold-text {
+    font-weight: bold;
+}
+
 /* MODAL */
 .modal {
 	display: none; /* Hidden by default */
