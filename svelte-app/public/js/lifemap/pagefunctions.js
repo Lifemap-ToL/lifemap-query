@@ -122,6 +122,13 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 							latlong = new L.LatLng(jsonData[0].lat[0], jsonData[0].lon[0]);
 							SPfocus = L.marker(latlong,{icon: pin1, opacity:1});
 							markerList.push(SPfocus);
+							if (clickableMarkers) {
+								SPfocus.on("click", function (){
+									let comname = "";
+									try {comname = jsonData[0].common_name[0]} catch (e) {};
+									markofun(jsonData[0].taxid[0], jsonData[0].sci_name[0], comname, jsonData[0].rank[0]);
+								})
+							}
 							// TODO
 							// SPfocus.on("click", function() {
 							// 	markofun(taxidok, spnameok,commonnameok,rankok);
