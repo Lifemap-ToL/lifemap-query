@@ -105,7 +105,7 @@ function getmultiRoute(multiA, lang) {
 		}
 	}
 	//this lists all required taxid, each once only. From those we will get lat/lon coordinates
-	var URL_PREFIX_FINAL = lang=="fr" ? "http://lifemap-fr.univ-lyon1.fr/solr/taxo/select?q=taxid:(" : "http://lifemap.univ-lyon1.fr/solr/taxo/select?q=taxid:(";
+	var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
 
 	var URL_SUFFIX = ")&wt=json&rows=10000";
 	var URL = URL_PREFIX_FINAL + alreadymet.join(' ') + URL_SUFFIX;

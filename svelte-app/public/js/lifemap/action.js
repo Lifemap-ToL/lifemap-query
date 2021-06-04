@@ -13,7 +13,7 @@ function onLoad() {
 
 	//language -> define address of basemap. english by default
 	const lang = urlParams.get('lang')
-	ServerAddress = lang=="fr" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
+	ServerAddress = lang=="en" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
 
 	setmaplayer('http://'+ServerAddress+'/retina_tiles/{z}/{x}/{y}.png');
 
