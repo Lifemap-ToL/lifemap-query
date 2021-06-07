@@ -4,7 +4,7 @@
 
 //VARIABLES
 var ServerAddress="";
-
+var zoomButton;
 function onLoad() {
 
 	//Get url parameters
@@ -15,7 +15,7 @@ function onLoad() {
 	//language -> define address of basemap. english by default
 	const lang = urlParams.get('lang')
 	ServerAddress = lang=="en" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
-
+	
 	setmaplayer('http://'+ServerAddress+'/retina_tiles/{z}/{x}/{y}.png');
 
 	//get taxid(s) (if any) 
@@ -41,16 +41,14 @@ function onLoad() {
 	//get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
 	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
 
+	//get zoom button option. If true (the default), it displays zoom buttons
+	zoomButton = urlParams.get('zoomButton') == "false" ? false : true;
+
 	//get debug option. If true (false is the default), it displays all options configuration
 	const debug = urlParams.get('debug') == "true" ? true : false;
 
 	if (tids) DisplayTaxids(taxids, zoom, marks, tree, clickableMarkers);
-	if (searchbar) { 
-		DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
-	} else {
-		searchDiv = document.getElementById("searchbar");
-		searchDiv.parentNode.removeChild(searchDiv);
-	}
+	DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
 
 	// Please, add new params here for the debug mode
 	let param = {"debug": debug, 
@@ -61,22 +59,17 @@ function onLoad() {
 		"tree": tree,
 		"searchbar": searchbar,
 		"uifontsize": uifontsize,
-		"clickableMarkers": clickableMarkers
+		"clickableMarkers": clickableMarkers,
+		"zoomButton": zoomButton
 	};
 
-	// console.log(param);
-	// for (const [key, value] of Object.entries(param)) {
-	// 	console.log(key, value);
-	// };
-
-	// console.log(param);
+	debugDiv = document.getElementById("debug-mode");
 	if (debug) {
-		debugDiv = document.getElementById("debug-mode");
 		for (const [key, value] of Object.entries(param)) {
 			debugDiv.innerHTML += 
 			`
 			${key + ": " + value} <br>
 			`
 		};	
-	}
+	} else {debugDiv.parentNode.removeChild(debugDiv);}
 }

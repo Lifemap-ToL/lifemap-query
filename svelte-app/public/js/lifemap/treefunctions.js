@@ -5,9 +5,9 @@
 
 /*
 	this DisplayTaxids() function is the main one. It will display the taxids required.
-	zoom=true => zoom to the taxids;
-	marks=true => add markers;
-	tree=true => draw the tree;
+	zoom=[true]false => zoom to the taxids;
+	marks=[true]false => add markers;
+	tree=[true]false => draw the tree;
 	clickableMarkers=[true]false => if true, markers become clickable and they open a modal box with information.
 */
 

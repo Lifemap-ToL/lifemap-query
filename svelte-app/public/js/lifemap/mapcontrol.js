@@ -2,7 +2,12 @@
 	Functions for setting basemap options and define the appearance of markers.	
 */
 
-var map = L.map('map', {zoomControl: false, attributionControl: false});
+
+/*
+zoomButton=[true]false => display zoom buttons
+*/
+console.log(zoomButton);  
+var map = L.map('map', {zoomControl: zoomButton, attributionControl: false});
 
 function setmaplayer(tolUrl) {
 	if (map.hasLayer(tol)) map.removeLayer(tol)

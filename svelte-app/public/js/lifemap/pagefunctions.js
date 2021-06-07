@@ -1,5 +1,5 @@
 /*
-lang=[en]fr: in the follow code, this option allow to request the right server (between fr and en server);
+lang=[en]fr => in the follow code, this option allow to request the right server (between fr and en server);
 searchbar=[true]false => if true it display the searchbar;
 uifontsize=[11]int => when the searchbar is displayed it allows to modify font size of suggestions;
 clickableMarkers=[true]false => if true, markers become clickable and they open a modal box with information.
@@ -35,7 +35,7 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 		jQuery.ui.autocomplete.prototype._resizeMenu = function () {
 			var ul = this.menu.element;
 			ul.outerWidth(this.element.outerWidth());
-		};
+		};  
 
 
 		let SPfocus; // marker that will be add by the searchbar selection
@@ -139,7 +139,7 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 				}
 			})
 		});
-	}
+	} else {searchDiv.parentNode.removeChild(searchDiv);}
 }
 
 
