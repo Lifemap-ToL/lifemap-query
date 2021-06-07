@@ -6,6 +6,7 @@ The url can integrate parameters that will specify what to see on the map and in
 
 ## Options available
 Default options are displayed in square brackets []:
+* `debug=[false]true` Should options display for debug?
 * `tid=x,y,z` NCBI taxonomy id (taxid) of taxa to highlight. If more than one, should be separated by commas.
 * `lang=[en]fr` Language of the base map
 * `marks=[true]false` Should markers be displayed at the taxids locations? 
