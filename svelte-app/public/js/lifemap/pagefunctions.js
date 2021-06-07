@@ -80,12 +80,6 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 								commonname=commonname.replace(/<\/b>/g,"");
 								var renderval = spname + commonname;
 								labOK = str[0].replaceAll("<b>", "").replaceAll("</b>", "") //+ str[1] + str[2]
-								// if ((issp==="species")||(issp==="subspecies")) {
-								// 	labOK = "<div style='padding: 20px;'><span class=\"scinameItalic\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\" >" + str[2] + "</span></div>";			
-								// }
-								// else {
-								// 	labOK = "<div style='padding: 20px;'><span class=\"sciname\">" + str[0] + "</span><span class=\"commonname\">" + str[1] + "</span><br><span class=\"rank\">" + str[2] + "</span></div>";
-								// };
 								return {
 									label: labOK,
 									value: renderval,
@@ -268,17 +262,6 @@ let markofun = function(taxid, spname, comname, rank) {
 			modal.innerHTML = "";
 		}
 	}
-	// $('#myModal').modal('show');
-	// $('#viewfullancestry').on("click", function() {
-	// 	taxidFrom = taxi;
-	// 	taxidTo = "1";
-	// 	$("#myModal").modal("hide");
-	// 	$("#mainsearch").hide();					
-	// 	$('#searchinput2').val(spna + comna);
-	// 	$('#searchinput3').val('Root');
-	// 	$("#route-top").show();
-	// 	mrcaroute();
-	// })
 };
 
 

@@ -3,20 +3,26 @@
 */
 
 //VARIABLES
-var ServerAddress="";
-var zoomButton;
-function onLoad() {
+var ServerAddress = "";
 
-	//Get url parameters
-	const queryString = window.location.search;
-	const urlParams = new URLSearchParams(queryString);
-	
+//Get url parameters
+var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+
+function onLoad() {	
 
 	//language -> define address of basemap. english by default
 	const lang = urlParams.get('lang')
-	ServerAddress = lang=="en" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
 	
+	ServerAddress = lang=="en" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
 	setmaplayer('http://'+ServerAddress+'/retina_tiles/{z}/{x}/{y}.png');
+
+	function setmaplayer(tolUrl) {
+		if (map.hasLayer(tol)) map.removeLayer(tol)
+		var tol = new L.TileLayer(tolUrl, {minZoom: 2, maxZoom: 42, detectRetina:false});
+		map.addLayer(tol);
+		map.setView([-5,0], 4);
+	}
 
 	//get taxid(s) (if any) 
 	const tids = urlParams.get('tid')
@@ -41,13 +47,10 @@ function onLoad() {
 	//get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
 	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
 
-	//get zoom button option. If true (the default), it displays zoom buttons
-	zoomButton = urlParams.get('zoomButton') == "false" ? false : true;
-
 	//get debug option. If true (false is the default), it displays all options configuration
 	const debug = urlParams.get('debug') == "true" ? true : false;
 
-	if (tids) DisplayTaxids(taxids, zoom, marks, tree, clickableMarkers);
+	if (tids) DisplayTaxids(pin1, taxids, zoom, marks, tree, clickableMarkers);
 	DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
 
 	// Please, add new params here for the debug mode

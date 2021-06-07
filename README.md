@@ -15,6 +15,7 @@ Default options are displayed in square brackets []:
 * `searchbar=[true]false` should the searchbar be displayed?
 * `uifontsize=[11]integer` modify font size in the searchbar menu
 * `clickableMarkers=[true]false` Should markers show a pop-up with some information about taxon with a link towards <em>Wikipedia</em> taxon's page?
+* `zoomButton=[true]false` Should zoom buttons from <em>Leaflet</em> be displayed?
 
 ## Example
 Add to your `index.html` the following code:

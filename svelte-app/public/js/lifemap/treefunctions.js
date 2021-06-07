@@ -16,7 +16,7 @@ function onlyUnique(value, index, self) {
 	return self.indexOf(value) === index;
 }
 
-var DisplayTaxids = function(taxids, zoom=false, marks=false, tree=false, clickableMarkers) {
+var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, clickableMarkers) {
 	taxids = taxids.filter( onlyUnique );
 	taxid = "(" + taxids.map(el => el.trim()).join(" ") + ")";
 
