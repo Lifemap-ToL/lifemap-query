@@ -2,9 +2,13 @@
 	Functions to get parameters from url and do what must be done
 */
 
+/*
+	this DisplayTaxids() function is the main one. It will display the taxids required.
+	debug=[false]true => display the debug mode when true;
+*/
+
 //VARIABLES
 var ServerAddress = "";
-
 //Get url parameters
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
@@ -42,15 +46,32 @@ function onLoad() {
 
 	//get font size for the jquery autocomplete widget, default is 11px
 	let uifontsize = urlParams.get('uifontsize');
-	try { uifontsize = parseInt(uifontsize, 10);} catch (e) {uifontsize = null}
+	try { uifontsize = parseInt(uifontsize, 10)} catch (e) {uifontsize = null}
 
 	//get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
 	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
 
+	// get line color of tree (orange is the default)
+	let colorLine = urlParams.get('colorLine');
+	if (isColor(colorLine)) {
+	} else if (isHexColor(colorLine)) {
+		colorLine = "#" + colorLine
+	} else {colorLine = 'orange'};
+
+	// get line opacity of tree (default is 0.6)
+	let opacityLine = urlParams.get('opacityLine');
+	try {opacityLine = parseFloat(opacityLine)} catch (e) {opacityLine = 0.6}
+	if (isNaN(opacityLine)) {opacityLine = 0.6};
+
+	// get line weight of tree (default is 6)
+	let weightLine = urlParams.get('weightLine');
+	try {uifontsize = parseInt(uifontsize, 10)} catch (e) {weightLine = 6}
+	if (typeof weightLine == "string") {weightLine = 6};
+
 	//get debug option. If true (false is the default), it displays all options configuration
 	const debug = urlParams.get('debug') == "true" ? true : false;
 
-	if (tids) DisplayTaxids(pin1, taxids, zoom, marks, tree, clickableMarkers);
+	if (tids) DisplayTaxids(pin1, taxids, zoom, marks, tree, clickableMarkers, colorLine, opacityLine, weightLine);
 	DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
 
 	// Please, add new params here for the debug mode
@@ -63,7 +84,10 @@ function onLoad() {
 		"searchbar": searchbar,
 		"uifontsize": uifontsize,
 		"clickableMarkers": clickableMarkers,
-		"zoomButton": zoomButton
+		"zoomButton": zoomButton,
+		"colorLine": colorLine,
+		"opacityLine": opacityLine,
+		"weightLine": weightLine
 	};
 
 	debugDiv = document.getElementById("debug-mode");
@@ -75,4 +99,17 @@ function onLoad() {
 			`
 		};	
 	} else {debugDiv.parentNode.removeChild(debugDiv);}
+}
+
+
+function isColor(strColor) { // test if a string is a valid color
+	var s = new Option().style;
+	s.color = strColor;
+	return s.color == strColor;
+}
+
+function isHexColor(hex) {
+	return typeof hex === 'string'
+		&& hex.length === 6
+		&& !isNaN(Number('0x' + hex))
 }

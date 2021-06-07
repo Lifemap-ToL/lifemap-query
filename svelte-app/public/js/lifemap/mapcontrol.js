@@ -11,7 +11,7 @@ zoomButton=[true]false => display zoom buttons
 //get zoom button option. If true (the default), it displays zoom buttons
 const zoomButton = urlParams.get('zoomButton') == "false" ? false : true;
 
-var map = L.map('map', {zoomControl: zoomButton, attributionControl: false});
+var map = L.map('map', {zoomControl: zoomButton, attributionControl: true});
 
 var markers = new L.FeatureGroup();
 let markerList = [];

@@ -43,7 +43,7 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 			var str;
 			var URL_PREFIX =  "http://" + ServerAddress + "/solr/taxo/suggesthandler?suggest.q=";
 			var URL_PREFIX_FINAL = "http://" + ServerAddress + "/solr/taxo/select?q=taxid:";
-			var URL_SUFFIX = "&wt=json";
+			var URL_SUFFIX = "&wt=json&suggest.count=30";
 
 			$("#searchinput").autocomplete({
 				source : function(request, response) {
@@ -52,8 +52,9 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 						url : URL,
 						success : function(data) {
 							var step1=data.suggest.mySuggester[$("#searchinput").val()];
-							try {var docs = JSON.stringify(step1.suggestions);} catch(e) {};
+							try {var docs = JSON.stringify(step1.suggestions)} catch(e) {};
 							var jsonData = JSON.parse(docs);
+
 							jsonData.sort(function(a,b) {
 								a1 = a.term.split("|")[0].replace(/<b>/g,"").replace(/<\/b>/g,"");
 								b1 = b.term.split("|")[0].replace(/<b>/g,"").replace(/<\/b>/g,"");
@@ -94,7 +95,6 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 						jsonp : 'json.wrf'
 					});
 				},
-
 				minLength : '1',
 				autoFocus: true,
 				html: true,
@@ -131,7 +131,7 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 						jsonp : 'json.wrf'
 					});	    
 				}
-			})
+			});
 		});
 	} else {searchDiv.parentNode.removeChild(searchDiv);}
 }
