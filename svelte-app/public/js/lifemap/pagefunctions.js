@@ -41,8 +41,8 @@ var DisplayInfo = function(lang, searchbar=false, uifontsize, clickableMarkers) 
 		let SPfocus; // marker that will be add by the searchbar selection
 		$(function() {
 			var str;
-			var URL_PREFIX = lang=="fr" ? "http://lifemap-fr.univ-lyon1.fr/solr/taxo/suggesthandler?suggest.q=" : "http://lifemap.univ-lyon1.fr/solr/taxo/suggesthandler?suggest.q=";
-			var URL_PREFIX_FINAL = lang=="fr" ? "http://lifemap-fr.univ-lyon1.fr/solr/taxo/select?q=taxid:" : "http://lifemap.univ-lyon1.fr/solr/taxo/select?q=taxid:";
+			var URL_PREFIX =  "http://" + ServerAddress + "/solr/taxo/suggesthandler?suggest.q=";
+			var URL_PREFIX_FINAL = "http://" + ServerAddress + "/solr/taxo/select?q=taxid:";
 			var URL_SUFFIX = "&wt=json";
 
 			$("#searchinput").autocomplete({
