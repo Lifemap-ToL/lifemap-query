@@ -21,16 +21,10 @@ Default options are displayed in square brackets []:
 * `weightLine=[6]int` Define the weight line of tree.
 
 ## Example
-<<<<<<< HEAD
-Add to your `index.html` the following code:
+Add to your `.html` the following code:
 ```
-<iframe src="lifemap.html?lang=fr&tid=9606,2,4646&zoom=false&markers=true&tree=true&searchbar=false&uifontsize=11&clickableMarkers=true" width="80%" height="60%"></iframe>
+<iframe src="index.html?lang=fr&tid=9606,2,4646&zoom=false&markers=true&tree=true&searchbar=false&uifontsize=11&clickableMarkers=true" width="80%" height="60%"></iframe>
 ```
-=======
-You can try it here :  
-[http://lifemap.univ-lyon1.fr/lifemap-query/?tid=9443,2&lang=fr&zoom=true&markers=true](http://lifemap.univ-lyon1.fr/lifemap-query/?tid=9443,2&lang=fr&zoom=true&markers=true
-)
->>>>>>> origin/main
 
 
 
