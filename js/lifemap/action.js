@@ -18,7 +18,7 @@ function onLoad() {
 	//language -> define address of basemap. english by default
 	const lang = urlParams.get('lang')
 	
-	ServerAddress = lang=="en" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
+	ServerAddress = lang=="fr" ? "lifemap-fr.univ-lyon1.fr" : "lifemap.univ-lyon1.fr"
 	setmaplayer('http://'+ServerAddress+'/retina_tiles/{z}/{x}/{y}.png');
 
 	function setmaplayer(tolUrl) {
@@ -49,9 +49,7 @@ function onLoad() {
 	try {uifontsize = parseInt(uifontsize, 10)} catch (e) {}
 	if (isNaN(uifontsize)) {
 		uifontsize = null
-	} else {
-		
-	}
+	} else {}
 
 	//get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
 	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
@@ -71,7 +69,7 @@ function onLoad() {
 	// get line weight of tree (default is 6)
 	let weightLine = urlParams.get('weightLine');
 	try {weightLine = parseInt(weightLine, 10)} catch (e) {weightLine = 6}
-	if (typeof weightLine == "string") {weightLine = 6};
+	if (isNaN(weightLine)) {weightLine = 6};
 
 	//get debug option. If true (false is the default), it displays all options configuration
 	const debug = urlParams.get('debug') == "true" ? true : false;

@@ -55,7 +55,6 @@ var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, 
 				map.addLayer(markers)
 			}
 			if (tree) {
-
 				allRoutes(taxid, colorLine, opacityLine, weightLine).then(function(resu) {
 						var RESUFINAL = [];
 						var RESUROUTES = [];
