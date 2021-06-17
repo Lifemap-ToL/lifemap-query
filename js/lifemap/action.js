@@ -47,7 +47,6 @@ function onLoad() {
 	//get font size for the jquery autocomplete widget, default is 11px
 	let uifontsize = urlParams.get('uifontsize');
 	try {uifontsize = parseInt(uifontsize, 10)} catch (e) {}
-	console.log(typeof(uifontsize))
 	if (isNaN(uifontsize)) {
 		uifontsize = null
 	} else {
