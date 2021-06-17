@@ -46,7 +46,13 @@ function onLoad() {
 
 	//get font size for the jquery autocomplete widget, default is 11px
 	let uifontsize = urlParams.get('uifontsize');
-	try { uifontsize = parseInt(uifontsize, 10)} catch (e) {uifontsize = null}
+	try {uifontsize = parseInt(uifontsize, 10)} catch (e) {}
+	console.log(typeof(uifontsize))
+	if (isNaN(uifontsize)) {
+		uifontsize = null
+	} else {
+		
+	}
 
 	//get click on markers option. If true (the default) when the marker is clicked, information about taxon are displayed
 	const clickableMarkers = urlParams.get('clickableMarkers') == "false" ? false : true;
@@ -65,7 +71,7 @@ function onLoad() {
 
 	// get line weight of tree (default is 6)
 	let weightLine = urlParams.get('weightLine');
-	try {uifontsize = parseInt(uifontsize, 10)} catch (e) {weightLine = 6}
+	try {weightLine = parseInt(weightLine, 10)} catch (e) {weightLine = 6}
 	if (typeof weightLine == "string") {weightLine = 6};
 
 	//get debug option. If true (false is the default), it displays all options configuration
