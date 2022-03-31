@@ -21,15 +21,33 @@ function onlyUnique(value, index, self) {
 
 var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, clickableMarkers, colorLine, opacityLine, weightLine) {
 	taxids = taxids.filter( onlyUnique );
-	taxid = "(" + taxids.map(el => el.trim()).join(" ") + ")";
-
+	let n_taxids = taxids.length;
 	markers = new L.FeatureGroup();
-	var url = 'http://'+ServerAddress+'/solr/taxo/select?q=taxid:'+taxid+'&wt=json';
+	let slicer = 0;
+	let sliced_taxids;
+	let taxid;
+	let url;
+	
+	while (n_taxids > 0) {
+		sliced_taxids = taxids.slice(slicer, slicer+10);
+		taxid = "(" + sliced_taxids.map(el => el.trim()).join(" ") + ")";
+		url = 'http://'+ServerAddress+'/solr/taxo/select?q=taxid:'+taxid+'&wt=json';
+		queryServer(url, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers);
+
+		n_taxids = n_taxids-10;
+		slicer = slicer+10;
+	  }
+	console.log(slicer);
+
+	    
+};
+
+function queryServer(url, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers) {
 	$.ajax({
 		url : url,
 		success : function(data) {
 			var docs = JSON.stringify(data.response.docs);
-			var ok = JSON.parse(docs);
+			var ok = JSON.parse(docs);			
 			$.each(ok, function( index, value ) {
 				var latlong = new L.LatLng(ok[index].lat[0], ok[index].lon[0]);
 				var marker = L.marker(latlong,{icon: pin1, opacity:1});
@@ -52,7 +70,7 @@ var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, 
 				}
 			}
 			if (marks) {
-				map.addLayer(markers)
+				map.addLayer(markers);
 			}
 			if (tree) {
 				allRoutes(taxid, colorLine, opacityLine, weightLine).then(function(resu) {
@@ -75,8 +93,9 @@ var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, 
 		},
 		dataType : 'jsonp',
 		jsonp : 'json.wrf'
-	});	    
+	});
 };
+
 function allRoutes(multiTaxid) {
 	return new Promise(function (resolve, reject) {
 		var url = "http://"+ServerAddress+"/solr/addi/select?q=*:*&fq=taxid:("+multiTaxid+")&wt=json&rows=1000";
@@ -107,7 +126,7 @@ function getmultiRoute(multiA, colorLine, opacityLine, weightLine) {
 			}
 		}
 	}
-	//this lists all required taxid, each once only. From those we will get lat/lon coordinates
+	//this lists all required taxid, each once only. From those we will get lat/long coordinates
 	var URL_PREFIX_FINAL = "http://"+ServerAddress+"/solr/taxo/select?q=taxid:(";
 
 	var URL_SUFFIX = ")&wt=json&rows=10000";
