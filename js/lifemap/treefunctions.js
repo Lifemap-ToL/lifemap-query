@@ -32,7 +32,7 @@ var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, 
 		sliced_taxids = taxids.slice(slicer, slicer+10);
 		taxid = "(" + sliced_taxids.map(el => el.trim()).join(" ") + ")";
 		url = 'http://'+ServerAddress+'/solr/taxo/select?q=taxid:'+taxid+'&wt=json';
-		queryServer(url, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers);
+		queryServer(url, pin1, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers);
 
 		n_taxids = n_taxids-10;
 		slicer = slicer+10;
@@ -42,7 +42,7 @@ var DisplayTaxids = function(pin1, taxids, zoom=false, marks=false, tree=false, 
 	    
 };
 
-function queryServer(url, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers) {
+function queryServer(url, pin1, taxid, zoom, marks, tree, colorLine, opacityLine, weightLine, clickableMarkers) {
 	$.ajax({
 		url : url,
 		success : function(data) {

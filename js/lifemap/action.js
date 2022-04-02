@@ -29,8 +29,7 @@ function onLoad() {
 	}
 
 	//get taxid(s) (if any) 
-	const tids = urlParams.get('tid')
-	taxids = tids.split(",")
+	const tids = urlParams.get('tid');
 
 	//get zoom option. If true (the default) zoom to the taxids (if any)
 	const zoom = urlParams.get('zoom') == "false" ? false : true;
@@ -74,7 +73,10 @@ function onLoad() {
 	//get debug option. If true (false is the default), it displays all options configuration
 	const debug = urlParams.get('debug') == "true" ? true : false;
 
-	if (tids) DisplayTaxids(pin1, taxids, zoom, marks, tree, clickableMarkers, colorLine, opacityLine, weightLine);
+	if (tids) {
+		taxids = tids.split(",");
+		DisplayTaxids(pin1, taxids, zoom, marks, tree, clickableMarkers, colorLine, opacityLine, weightLine);
+	};
 	DisplayInfo(lang, searchbar, uifontsize, clickableMarkers);
 
 	// Please, add new params here for the debug mode
